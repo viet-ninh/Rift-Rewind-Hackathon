@@ -3,7 +3,7 @@ import time
 import os
 import json
 
-API_KEY = "RGAPI-81019d3c-80aa-4630-b073-72c0b1ff2768"
+API_KEY = "RIOT-API-KEY-HERE"
 MATCH_REGION = "asia"  # for NA/LAN/BR; use "europe" for EU; "asia" for KR/JP
 
 def get_puuid(gameName, tagLine):
