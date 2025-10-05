@@ -9,14 +9,10 @@ import { RiotAccount } from '@/types/riot.types';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const gameName = searchParams.get('gameName');
-  const tagLine = searchParams.get('tagLine');
+  const puuid = searchParams.get('puuid');
 
   // validate required parameters
-  const paramError = validateRequiredParams(
-    { gameName, tagLine },
-    ['gameName', 'tagLine']
-  );
+  const paramError = validateRequiredParams({ puuid }, ['puuid']);
   if (paramError) return paramError;
 
   // validate API key
@@ -26,7 +22,7 @@ export async function GET(request: Request) {
 
   // fetch from Riot API
   const { data, error } = await fetchRiotApi<RiotAccount>(
-    `/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(gameName!)}/${encodeURIComponent(tagLine!)}`,
+    `/riot/account/v1/accounts/by-puuid/${encodeURIComponent(puuid!)}`,
     apiKey!
   );
 
