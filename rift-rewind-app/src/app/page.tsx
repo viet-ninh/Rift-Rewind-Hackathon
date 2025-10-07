@@ -1,4 +1,3 @@
-import Image from "next/image";
 import App from '../components/league_landing_page'; // Adjust the path as needed
 
 export default function Home() {

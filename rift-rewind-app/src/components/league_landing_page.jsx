@@ -1,88 +1,16 @@
 "use client"; // <-- ADD THIS DIRECTIVE
 import React, { useState } from 'react';
 
-// LoL-inspired color palette
-const COLORS = {
-  DARK_BG: '#0A141A', // Deep background
-  ACCENT_GOLD: '#C8AA6E', // Primary gold accent
-  ACCENT_BLUE: '#03B3FF', // Primary magic blue
-  DARK_PANEL: 'rgba(10, 20, 26, 0.8)', // Semi-transparent panel
-};
-
-// Custom CSS for LoL aesthetic animations (Pulsating button and glow)
-const LoLCSS = `
-  /* Keyframes for the Pulsating Glow */
-  @keyframes glow {
-    0% { box-shadow: 0 0 5px ${COLORS.ACCENT_BLUE}, 0 0 10px ${COLORS.ACCENT_BLUE}; }
-    50% { box-shadow: 0 0 15px ${COLORS.ACCENT_BLUE}, 0 0 30px ${COLORS.ACCENT_BLUE}, 0 0 45px ${COLORS.ACCENT_BLUE}; }
-    100% { box-shadow: 0 0 5px ${COLORS.ACCENT_BLUE}, 0 0 10px ${COLORS.ACCENT_BLUE}; }
-  }
-
-  /* Keyframes for the Subtle Shimmer on Card Hover */
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-
-  .glow-text {
-    text-shadow: 0 0 5px ${COLORS.ACCENT_BLUE};
-  }
-
-  .glow-button {
-    animation: glow 3s infinite alternate;
-    transition: all 0.3s ease;
-  }
-
-  .glow-button:hover {
-    box-shadow: 0 0 20px ${COLORS.ACCENT_GOLD}, 0 0 40px ${COLORS.ACCENT_GOLD};
-    transform: translateY(-2px);
-  }
-
-  .angled-border {
-    position: relative;
-    padding: 1px; /* Required to offset the border */
-    background: linear-gradient(to right, ${COLORS.DARK_BG}, ${COLORS.DARK_BG});
-    clip-path: polygon(0 0, 100% 0, 100% 85%, 90% 100%, 0 100%);
-  }
-
-  .angled-border::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, ${COLORS.ACCENT_GOLD}, ${COLORS.ACCENT_BLUE});
-    z-index: -1;
-    clip-path: polygon(0 0, 100% 0, 100% 85%, 90% 100%, 0 100%);
-    transition: all 0.3s ease;
-    opacity: 0.5;
-  }
-
-  .angled-border:hover::before {
-    opacity: 1;
-    transform: scale(1.01);
-  }
-
-  /* LoL Font Simulation */
-  .lol-font {
-    font-family: 'Inter', sans-serif; /* Fallback */
-    letter-spacing: 0.05em;
-  }
-
-  .lol-bg {
-    background-color: ${COLORS.DARK_BG};
-    /* Optional: Adding a subtle background texture simulation */
-    background-image: radial-gradient(circle at 50% 10%, rgba(3, 179, 255, 0.05) 0%, transparent 70%);
-  }
-`;
-
 // Helper component for the feature cards
 const FeatureCard = ({ title, description, icon }) => {
   return (
+    // The class names (.angled-border, .lol-font) now come from lol-theme.css
+    // Note: You should still use Tailwind classes for structure (w-full, p-4, etc.)
     <div className="angled-border w-full md:w-1/3 p-4">
-      <div className={`bg-[${COLORS.DARK_PANEL}] rounded-md p-6 h-full flex flex-col justify-between lol-font`}>
-        <div className="text-4xl text-yellow-300 mb-4">{icon}</div>
+      <div className={`bg-lol-panel rounded-md p-6 h-full flex flex-col justify-between lol-font`}>
+        {/* You'll need to use standard Tailwind classes for text color, 
+            which you should set up in tailwind.config.js as "lol-gold" */}
+        <div className="text-4xl text-lol-gold mb-4">{icon}</div> 
         <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-wider">{title}</h3>
         <p className="text-gray-400 text-sm">{description}</p>
       </div>
@@ -96,12 +24,10 @@ const App = () => {
 
   return (
     <>
-      {/* Inject custom CSS for animations */}
-      <style>{LoLCSS}</style>
-
-      <div className={`lol-bg min-h-screen w-full flex flex-col items-center justify-center p-4 text-white lol-font`}>
+       <div className={`lol-bg min-h-screen w-full flex flex-col items-center justify-center p-4 text-white lol-font`}>
         <header className="fixed top-0 left-0 right-0 p-4 flex justify-between items-center z-10 bg-black bg-opacity-50 border-b border-gray-800">
-          <div className={`text-3xl font-extrabold text-[${COLORS.ACCENT_GOLD}] glow-text`}>
+          {/* FIX 1: Use the configured Tailwind class for color */}
+          <div className="text-3xl font-extrabold text-lol-gold glow-text">
             LEAGUE OF LEGENDS
           </div>
           <nav className="space-x-6 text-sm">
@@ -109,9 +35,10 @@ const App = () => {
               <a 
                 key={item} 
                 href="#" 
-                className={`text-gray-400 hover:text-[${COLORS.ACCENT_GOLD}] transition duration-300 uppercase relative 
+                // FIX 2 & 3: Use the configured Tailwind classes for hover and after background color
+                className={`text-gray-400 hover:text-lol-gold transition duration-300 uppercase relative 
                             after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] 
-                            after:bg-[${COLORS.ACCENT_GOLD}] after:scale-x-0 after:hover:scale-x-100 after:transition after:origin-left`}
+                            after:bg-lol-gold after:scale-x-0 after:hover:scale-x-100 after:transition after:origin-left`}
               >
                 {item}
               </a>
@@ -122,10 +49,10 @@ const App = () => {
         {/* Hero Section */}
         <main className="flex flex-col items-center justify-center pt-24 pb-12 w-full max-w-6xl">
           <h1 className="text-6xl md:text-8xl font-black mb-4 uppercase text-center lol-font tracking-wider">
-            <span className={`text-[${COLORS.ACCENT_GOLD}]`} style={{ textShadow: `0 0 10px ${COLORS.ACCENT_GOLD}` }}>
+            <span className={`text-lol-gold`} style={{ textShadow: `0 0 10px var(--lol-gold)` }}>
               The Rift
             </span>
-            <span className={`text-[${COLORS.ACCENT_BLUE}]`} style={{ textShadow: `0 0 10px ${COLORS.ACCENT_BLUE}` }}>
+            <span className={`text-lol-blue`} style={{ textShadow: `0 0 10px var(--lol-blue)` }}>
               Awaits
             </span>
           </h1>
@@ -135,13 +62,9 @@ const App = () => {
 
           {/* Pulsating Play Button */}
           <button
-            className={`glow-button bg-[${COLORS.ACCENT_BLUE}] text-black font-extrabold text-xl py-4 px-12 rounded-lg 
-                        shadow-2xl uppercase tracking-widest mb-20 transform hover:scale-[1.02] transition duration-300`}
-            style={{ 
-              backgroundColor: COLORS.ACCENT_BLUE,
-              borderColor: COLORS.ACCENT_GOLD,
-              borderWidth: '2px',
-            }}
+            className={`glow-button bg-lol-blue text-white font-extrabold text-xl py-4 px-12 rounded-lg 
+                    shadow-2xl uppercase tracking-widest mb-20 transform hover:scale-[1.02] 
+                    transition duration-300 border-2 border-lol-gold`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >

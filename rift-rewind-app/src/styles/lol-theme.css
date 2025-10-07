@@ -1,0 +1,77 @@
+/* Define the colors as CSS Custom Properties */
+:root {
+  /* LoL-inspired color palette */
+  --lol-dark-bg: #0A141A;    /* Deep background */
+  --lol-gold: #C8AA6E;      /* Primary gold accent */
+  --lol-blue: #03B3FF;       /* Primary magic blue */
+  --lol-panel: rgba(10, 20, 26, 0.8); /* Semi-transparent panel */
+}
+
+.bg-lol-blue {
+  background-color: #03B3FF;
+}
+
+/* Keyframes for the Pulsating Glow */
+@keyframes glow {
+  0% { box-shadow: 0 0 5px var(--lol-blue), 0 0 10px var(--lol-blue); }
+  50% { box-shadow: 0 0 15px var(--lol-blue), 0 0 30px var(--lol-blue), 0 0 45px var(--lol-blue); }
+  100% { box-shadow: 0 0 5px var(--lol-blue), 0 0 10px var(--lol-blue); }
+}
+
+/* Keyframes for the Subtle Shimmer on Card Hover */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.glow-text {
+  text-shadow: 0 0 5px var(--lol-blue);
+}
+
+.glow-button {
+  animation: glow 3s infinite alternate;
+  transition: all 0.3s ease;
+}
+
+.glow-button:hover {
+  box-shadow: 0 0 20px var(--lol-gold), 0 0 40px var(--lol-gold);
+  transform: translateY(-2px);
+}
+
+.angled-border {
+  position: relative;
+  padding: 1px;
+  background: linear-gradient(to right, var(--lol-dark-bg), var(--lol-dark-bg));
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 90% 100%, 0 100%);
+}
+
+.angled-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, var(--lol-gold), var(--lol-blue));
+  z-index: -1;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 90% 100%, 0 100%);
+  transition: all 0.3s ease;
+  opacity: 0.5;
+}
+
+.angled-border:hover::before {
+  opacity: 1;
+  transform: scale(1.01);
+}
+
+/* LoL Font Simulation */
+.lol-font {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.lol-bg {
+  background-color: var(--lol-dark-bg);
+  /* Optional: Adding a subtle background texture simulation */
+  background-image: radial-gradient(circle at 50% 10%, rgba(3, 179, 255, 0.05) 0%, transparent 70%);
+}
